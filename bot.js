@@ -3,12 +3,16 @@ require('dotenv').config();
 const Discord = require("discord.js");
 const { Routes } = require('discord-api-types/v9');
 const { REST } = require('@discordjs/rest');
+const embed = new Discord.MessageEmbed();
+const joined = require ("./events/joined")
 var fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
+const { channel } = require('diagnostics_channel');
 const client = new Client({
   intents: [
     Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_MESSAGES,
+    Intents.FLAGS.GUILD_MEMBERS
   ]
 });
 module.exports.client = client;
@@ -54,6 +58,7 @@ for (const file of commandFiles) {
 client.on("ready", async () => {
   let guild = client.guilds.cache.get(GUILD_ID);
   console.log("VanniBot is ready!")
+
   client.user.setPresence({
     status: "online",
     activity: {
@@ -62,6 +67,8 @@ client.on("ready", async () => {
     }
   });
 });
+
+client.on('guildMemberAdd', joined )
 
 client.on('interactionCreate', async interaction => {
   if (!interaction.isCommand()) return;

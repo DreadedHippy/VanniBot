@@ -42,15 +42,14 @@ module.exports = {
         content: 'I dont see a "?"',
         ephemeral: true
       })
-    }
-      console.log("? not found inside your question");
+    } else {
       function getRndInteger(min, max) {
         return Math.floor(Math.random() * (max - min + 1) ) + min;
       }
       const Index = getRndInteger(min, max)
       await interaction.reply({
         content: Replies[Index],
-        ephemeral: true
       })
+    }
     }
 }
